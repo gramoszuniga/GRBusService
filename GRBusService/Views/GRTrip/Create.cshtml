@@ -1,0 +1,33 @@
+﻿@model GRBusService.Models.trip
+
+@{
+    ViewBag.Title = "New trip for " + Session["code"] + "-" + Session["name"];
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <p>@Html.EditorForModel()</p>
+    <p>@Html.LabelFor(model => model.routeScheduleId)</p>
+    <p>@Html.DropDownList("routeScheduleId")@Html.ValidationMessageFor(model => model.routeScheduleId, "", new { @class = "text-danger" })</p>
+    <p>@Html.LabelFor(model => model.driverId)</p>
+    <p>@Html.DropDownList("driverId")@Html.ValidationMessageFor(model => model.driverId, "", new { @class = "text-danger" })</p>
+    <p>@Html.LabelFor(model => model.busId)</p>
+    int radioButtons = 0;
+    foreach (var item in (IEnumerable<GRBusService.Models.bus>)ViewBag.busId)
+    {
+        <span>
+            @Html.RadioButtonFor(model => model.busId, item.busId, new { id = "bus" + item.busNumber })@Html.Label("bus" + item.busNumber, item.busNumber.ToString())
+        </span>
+        radioButtons++;
+        if (radioButtons % 5 == 0)
+        {
+            <br />
+        }
+    }
+    @Html.ValidationMessageFor(model => model.busId, "", new { @class = "text-danger" })
+    Html.ValidationMessage("busId", new { @class = "text-danger" });
+    <p><input type="submit" value="Create Trip" /> @Html.ActionLink("Return to Listing", "Index")</p>
+}

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<GRBusService.Models.trip>
+
+@{
+    ViewBag.Title = "Bus Trips for " + Session["code"] + "-" + Session["name"];
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New Trip", "Create")
+</p>
+
+<table class="table">
+
+    <tr>
+        <th>
+            Date
+        </th>
+        <th>
+            Start Time
+        </th>
+        <th>
+            Driver
+        </th>
+        <th>
+            Bus #
+        </th>
+        <th>
+            Comments
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @String.Format("{0:ddd dd MMM yyyy}", item.tripDate)
+            </td>
+            <td>
+                @item.routeSchedule.startTime.Hours.ToString("d2"):@item.routeSchedule.startTime.Minutes:@item.routeSchedule.startTime.Seconds.ToString("d2")
+            </td>
+            <td>
+                @String.Concat(item.driver.lastName,", ",item.driver.firstName)
+            </td>
+            <td>
+                @item.bus.busNumber
+            </td>
+            <td>
+                @item.comments
+            </td>
+        </tr>
+    }
+</table>

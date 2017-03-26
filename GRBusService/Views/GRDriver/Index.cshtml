@@ -1,0 +1,64 @@
+﻿@model IEnumerable<GRBusService.Models.driver>
+@using GRBusService.App_GlobalResources
+
+@{
+    ViewBag.Title = GRTranslations.driverList;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink(GRTranslations.addDriver, "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.homePhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.workPhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.street)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateHired)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.homePhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.workPhone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.street)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.city)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateHired)
+        </td>
+        <td>
+            @Html.ActionLink(GRTranslations.edit, "Edit", new { id=item.driverId }) |
+            @Html.ActionLink(GRTranslations.details, "Details", new { id=item.driverId }) |
+            @Html.ActionLink(GRTranslations.delete, "Delete", new { id=item.driverId })
+        </td>
+    </tr>
+}
+
+</table>

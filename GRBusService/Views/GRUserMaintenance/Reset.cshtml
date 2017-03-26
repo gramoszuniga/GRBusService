@@ -1,0 +1,26 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework;
+@model IdentityUser
+
+@{
+    ViewBag.Title = "Reset Password";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("ResetConfirmed", "GRUserMaintenance"))
+{
+    <p>
+        @Html.LabelFor(model => model.UserName)
+        @Html.DisplayFor(model => model.UserName) <br />
+        @Html.HiddenFor(model => Model.UserName)
+        @Html.Label("newPassword")
+        @Html.Password("newPassword") <br />
+        @Html.Label("confirmedPassword")
+        @Html.Password("confirmedPassword") <br />
+        <input type="submit" value="Change Password" class="btn btn-default" />
+    </p>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

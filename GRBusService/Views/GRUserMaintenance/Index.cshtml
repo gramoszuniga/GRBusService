@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNet.Identity.EntityFramework
+@using Microsoft.AspNet.Identity
+@using GRBusService.Models
+@model IEnumerable<IdentityUser>
+@{UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));}
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LockoutEnabled)
+        </th>
+        <th>
+            Type
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LockoutEnabled)
+            </td>
+            <td>
+                @if (item.PasswordHash != null)
+                {
+                    <text>Internal</text>
+                }
+                else
+                {
+                    <text>External</text>
+                }
+            </td>
+            <td>
+                @if (item.LockoutEnabled)
+                {
+                    @Html.ActionLink("Unlock", "LockUnlock", new { userId = item.Id }) <text>|</text>
+                }
+                else
+                {
+                    @Html.ActionLink("Lock", "LockUnlock", new { userId = item.Id }) <text>|</text>
+                }
+                @if (!userManager.IsInRole(item.Id, "administrators"))
+                {
+                    @Html.ActionLink("Delete", "Delete", new { userId = item.Id }) <text>|</text>
+                }
+                @Html.ActionLink("Reset Password", "Reset", new { userId = item.Id })
+            </td>
+        </tr>
+    }
+</table>

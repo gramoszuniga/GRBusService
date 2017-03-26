@@ -1,0 +1,69 @@
+﻿@using GRBusService.App_GlobalResources
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - GRTransit</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img class="pull-left" width="50" height="50" src="~/Images/GRLogo.png" />
+                @Html.ActionLink("GRTransit", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink(GRTranslations.home, "Index", "Home")</li>
+                    <li>@Html.ActionLink(GRTranslations.routes, "Index", "GRBusRoute")</li>
+                    <li>@Html.ActionLink(GRTranslations.stops, "Index", "GRBusStop")</li>
+                    <li>@Html.ActionLink(GRTranslations.drivers, "Index", "GRDriver")</li>
+                    @if (User.IsInRole("administrators"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">@GRTranslations.security</a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink(GRTranslations.userMaintenance, "Index", "GRUserMaintenance")</li>
+                                <li>@Html.ActionLink(GRTranslations.roleMaintenance, "Index", "GRRoleMaintenance")</li>
+                            </ul>
+                        </li>
+                    }
+                    <li>@Html.ActionLink(GRTranslations.language, "ChangeLanguage", "GRLanguage")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <p class="text-danger">@TempData["message"]</p>
+        @RenderBody()
+        <hr />
+        <footer>
+            <table style="width: 100%;">
+                <tr>
+                    <td>&copy; <a href="mailto:gramoszuniga5711@conestogac.on.ca">Gonzalo Ramos</a>, @GRTranslations.section 3</td>
+                    <td>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>@Html.ActionLink(GRTranslations.about, "About", "Home")</li>
+                            <li>@Html.ActionLink(GRTranslations.contact, "Contact", "Home")</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
